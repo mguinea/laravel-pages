@@ -36,6 +36,7 @@ class PagesServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../resources/views' => resource_path('views/mguinea/laravel-pages'),
         ], 'views');
+
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'laravel-pages');
 
         $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
