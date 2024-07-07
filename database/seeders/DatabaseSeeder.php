@@ -14,9 +14,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        $userClass = config('laravel-pages.models.user');
+        $userClass::create([
+            'name' => 'Marc Guinea',
+            'email' => env(''),
+            'password' => MD5(env(''))
         ]);
     }
 }

@@ -5,6 +5,7 @@ namespace Mguinea\Pages\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Page extends Model implements PageInterface
 {
@@ -47,8 +48,19 @@ class Page extends Model implements PageInterface
         return $this->belongsTo(View::class);
     }
 
+    public function route(): HasOne
+    {
+        return $this->hasOne(Route::class);
+    }
+
     public static function fromUrl(string $url): static|null
     {
-        // TODO: Implement fromUrl() method.
+        $page = static::where('url', $url)->first();
+
+        if (!$page) {
+            return null;
+        }
+
+        return $page;
     }
 }

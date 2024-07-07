@@ -6,11 +6,14 @@ if (config('laravel-pages.route_loader_enabled') === true) {
     $router = app()->get(\Illuminate\Routing\Router::class);
 
     $routes = $routesLoader->load();
+
+    /** @var \Mguinea\Pages\Models\RouteInterface $route */
     foreach ($routes as $route) {
-        $router->addRoute(
-            'GET',
-            $route,
-            $showPageController
+        $laravelRoute = $router->addRoute(
+            $route->getVerb(),
+            $route->getUri(),
+            $route->getAction()
         );
+        $laravelRoute->name($route->getName());
     }
 }
