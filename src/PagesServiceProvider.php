@@ -1,6 +1,6 @@
 <?php
 
-namespace Mguinea\LaravelPages;
+namespace Mguinea\Pages;
 
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\ServiceProvider;
