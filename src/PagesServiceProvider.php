@@ -2,8 +2,10 @@
 
 namespace Mguinea\Pages;
 
-use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\ServiceProvider;
+use Mguinea\Pages\Models\PageInterface;
+use Mguinea\Pages\Models\RouteInterface;
+use Mguinea\Pages\Models\ViewInterface;
 use Mguinea\Pages\RouteLoaderInterface;
 
 class PagesServiceProvider extends ServiceProvider
@@ -37,9 +39,10 @@ class PagesServiceProvider extends ServiceProvider
 
         $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
 
-        $this->app->bind(RouteLoaderInterface::class, fn ($app) => $app->make($app->config['laravel-pages.route_loader']));
         $this->app->bind(PageInterface::class, fn ($app) => $app->make($app->config['laravel-pages.models.page']));
+        $this->app->bind(RouteInterface::class, fn ($app) => $app->make($app->config['laravel-pages.models.route']));
         $this->app->bind(ViewInterface::class, fn ($app) => $app->make($app->config['laravel-pages.models.view']));
+        $this->app->bind(RouteLoaderInterface::class, fn ($app) => $app->make($app->config['laravel-pages.route_loader']));
     }
 
     /**
