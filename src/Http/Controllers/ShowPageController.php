@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Mguinea\Pages\Http\Controllers;
 
-class ShowPageController
+class ShowPageController implements ShowPageControllerInterface
 {
     public function __invoke(Request $request)
     {

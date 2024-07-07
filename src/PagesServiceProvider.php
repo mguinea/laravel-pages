@@ -19,15 +19,11 @@ class PagesServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot(Filesystem $filesystem)
+    public function boot()
     {
         $this->publishes([
             __DIR__.'/../config/laravel-pages.php' => config_path('laravel-pages.php'),
         ], 'config');
-
-        $this->publishes([
-            __DIR__.'/../database/migrations/create_laravel_pages_tables.php.stub' => $this->getMigrationFileName($filesystem),
-        ], 'migrations');
 
         $this->publishesMigrations([
             __DIR__.'/../database/migrations' => database_path('migrations'),

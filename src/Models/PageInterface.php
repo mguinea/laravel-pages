@@ -11,4 +11,6 @@ interface PageInterface
     public function entry(): BelongsTo;
 
     public function view(): BelongsTo;
+
+    public static function fromUrl(string $url): static|null;
 }

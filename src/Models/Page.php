@@ -25,6 +25,13 @@ class Page extends Model implements PageInterface
         'view_id'
     ];
 
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+
+        $this->table = config('laravel-pages.table_names.pages') ?: parent::getTable();
+    }
+
     public function locale(): BelongsTo
     {
         return $this->belongsTo(Locale::class);
@@ -38,5 +45,10 @@ class Page extends Model implements PageInterface
     public function view(): BelongsTo
     {
         return $this->belongsTo(View::class);
+    }
+
+    public static function fromUrl(string $url): static|null
+    {
+        // TODO: Implement fromUrl() method.
     }
 }

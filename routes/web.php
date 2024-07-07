@@ -1,15 +1,16 @@
 <?php
 
 if (config('laravel-pages.route_loader_enabled') === true) {
-    $routesLoader = app()->make(\Mguinea\LaravelPages\RouteLoaderInterface::class);
-    $routes = $routesLoader->load();
+    $routesLoader = app()->make(\Mguinea\Pages\RouteLoaderInterface::class);
+    $showPageController = app()->make(\Mguinea\Pages\Http\Controllers\ShowPageControllerInterface::class);
     $router = app()->get(\Illuminate\Routing\Router::class);
 
+    $routes = $routesLoader->load();
     foreach ($routes as $route) {
         $router->addRoute(
             'GET',
             $route,
-            \App\Http\Controllers\ShowPageController::class
+            $showPageController
         );
     }
 }

@@ -16,6 +16,13 @@ class View extends Model implements ViewInterface
         'name'
     ];
 
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+
+        $this->table = config('laravel-pages.table_names.views') ?: parent::getTable();
+    }
+
     public function pages(): HasMany
     {
         return $this->hasMany(Page::class);

@@ -11,26 +11,27 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('locales', function (Blueprint $table) {
+        $tableNames = config('laravel-pages.table_names');
+
+        Schema::create($tableNames['locales'], function (Blueprint $table) {
             $table->id();
             $table->string('language');
             $table->string('localization');
             $table->boolean('default');
         });
 
-        Schema::create('entries', function (Blueprint $table) {
+        Schema::create($tableNames['entries'], function (Blueprint $table) {
             $table->id();
-            $table->string('key');
-            $table->string('base');
+            $table->string('key')->unique();
             $table->timestamps();
         });
 
-        Schema::create('views', function (Blueprint $table) {
+        Schema::create($tableNames['views'], function (Blueprint $table) {
             $table->id();
             $table->string('name');
         });
 
-        Schema::create('pages', function (Blueprint $table) {
+        Schema::create($tableNames['pages'], function (Blueprint $table) use ($tableNames) {
             $table->id();
             $table->string('url')->unique();
             $table->string('title');
@@ -43,17 +44,16 @@ return new class extends Migration
             $table->timestamps();
 
             $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
-
+            $table->foreign('user_id')->references('id')->on($tableNames['users']);
 
             $table->unsignedBigInteger('entry_id');
-            $table->foreign('entry_id')->references('id')->on('entries');
+            $table->foreign('entry_id')->references('id')->on($tableNames['entries']);
 
             $table->unsignedBigInteger('locale_id');
-            $table->foreign('locale_id')->references('id')->on('locales');
+            $table->foreign('locale_id')->references('id')->on($tableNames['locales']);
 
             $table->unsignedBigInteger('view_id');
-            $table->foreign('view_id')->references('id')->on('views');
+            $table->foreign('view_id')->references('id')->on($tableNames['views']);
         });
     }
 
@@ -62,9 +62,11 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('locales');
-        Schema::dropIfExists('entries');
-        Schema::dropIfExists('views');
-        Schema::dropIfExists('pages');
+        $tableNames = config('laravel-pages.table_names');
+
+        Schema::dropIfExists($tableNames['locales']);
+        Schema::dropIfExists($tableNames['entries']);
+        Schema::dropIfExists($tableNames['views']);
+        Schema::dropIfExists($tableNames['pages']);
     }
 };
