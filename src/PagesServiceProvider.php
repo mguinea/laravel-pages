@@ -3,6 +3,7 @@
 namespace Mguinea\Pages;
 
 use Illuminate\Support\ServiceProvider;
+use Mguinea\Pages\Http\Controllers\ShowPageControllerInterface;
 use Mguinea\Pages\Models\PageInterface;
 use Mguinea\Pages\Models\RouteInterface;
 use Mguinea\Pages\Models\ViewInterface;
@@ -53,6 +54,7 @@ class PagesServiceProvider extends ServiceProvider
         $this->app->bind(RouteLoaderInterface::class, function ($app) {
             return new RouteLoader($app->make(RouteInterface::class));
         });
+        $this->app->bind(ShowPageControllerInterface::class, fn ($app) => $app->make($app->config['laravel-pages.controllers.show_page']));
 
         $this->mergeConfigFrom(
             __DIR__.'/../config/laravel-pages.php',
