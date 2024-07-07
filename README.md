@@ -14,14 +14,6 @@ composer require mguinea/laravel-pages
 php artisan vendor:publish --provider="Mguinea\LaravelPages\PagesServiceProvider"
 ```
 
-- Add dynamic route handler to your project
-
-```php
-Route::get('/{uri?}', function ($uri) {
-    var_dump($uri);
-})->where('uri', '.*');
-```
-
 ## Architecture
 
 ### Database schema
@@ -88,5 +80,3 @@ erDiagram
         string key
     }
 ```
-
-Document is a markdown content
