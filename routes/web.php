@@ -13,11 +13,11 @@ if (config('laravel-pages.route_loader_enabled') === true) {
         /** @var \Mguinea\Pages\Models\RouteInterface $route */
         foreach ($routes as $route) {
             $laravelRoute = $router->addRoute(
-                $route->getVerb(),
-                $route->getUri(),
-                $route->getAction()
+                $route->verb,
+                $route->uri,
+                $route->action
             );
-            $laravelRoute->name($route->getName());
+            $laravelRoute->name($route->name);
         }
     }
 }

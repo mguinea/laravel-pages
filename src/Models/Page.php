@@ -12,7 +12,6 @@ class Page extends Model implements PageInterface
     use HasFactory;
 
     protected $fillable = [
-        'url',
         'title',
         'description',
         'published_at',
@@ -21,6 +20,8 @@ class Page extends Model implements PageInterface
         'robotFollow',
         'canonical',
         'content',
+        'route_id',
+        'user_id',
         'entry_id',
         'locale_id',
         'view_id'

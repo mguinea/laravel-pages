@@ -44,8 +44,8 @@ return new class extends Migration
             $table->string('title');
             $table->string('description');
             $table->datetime('published_at')->nullable();
-            $table->string('robotIndex')->default('Index');
-            $table->string('robotFollow')->default('Follow');
+            $table->string('robot_index')->default('Index');
+            $table->string('robot_follow')->default('Follow');
             $table->string('canonical');
             $table->longText('content');
             $table->timestamps();

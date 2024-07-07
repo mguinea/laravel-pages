@@ -4,6 +4,8 @@ namespace Mguinea\Pages;
 
 use Illuminate\Support\ServiceProvider;
 use Mguinea\Pages\Http\Controllers\ShowPageControllerInterface;
+use Mguinea\Pages\Models\EntryInterface;
+use Mguinea\Pages\Models\LocaleInterface;
 use Mguinea\Pages\Models\PageInterface;
 use Mguinea\Pages\Models\RouteInterface;
 use Mguinea\Pages\Models\ViewInterface;
@@ -49,6 +51,8 @@ class PagesServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->bind(EntryInterface::class, fn ($app) => $app->make($app->config['laravel-pages.models.entry']));
+        $this->app->bind(LocaleInterface::class, fn ($app) => $app->make($app->config['laravel-pages.models.locale']));
         $this->app->bind(PageInterface::class, fn ($app) => $app->make($app->config['laravel-pages.models.page']));
         $this->app->bind(RouteInterface::class, fn ($app) => $app->make($app->config['laravel-pages.models.route']));
         $this->app->bind(ViewInterface::class, fn ($app) => $app->make($app->config['laravel-pages.models.view']));

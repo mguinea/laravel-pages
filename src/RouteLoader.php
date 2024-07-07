@@ -13,9 +13,6 @@ class RouteLoader implements RouteLoaderInterface
 
     public function load(): Collection
     {
-        // TODO implement cache
-        $routes = $this->route->all();
-
-        return collect($routes->toArray());
+        return $this->route->all();
     }
 }
