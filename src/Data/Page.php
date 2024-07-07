@@ -64,7 +64,7 @@ class Page
             $eloquentPage->title,
             $eloquentPage->description,
             $eloquentPage->locale->language,
-            $eloquentPage->locale->location,
+            $eloquentPage->locale->localization,
             $content,
             $eloquentPage->view->name,
             $eloquentPage->robot_index,
