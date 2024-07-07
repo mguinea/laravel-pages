@@ -7,4 +7,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 interface LocaleInterface
 {
     public function pages(): HasMany;
+
+    public function getHrefLang(): string;
 }

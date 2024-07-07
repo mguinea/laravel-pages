@@ -29,4 +29,9 @@ class Locale extends Model implements LocaleInterface
     {
         return $this->hasMany(Page::class);
     }
+
+    public function getHrefLang(): string
+    {
+        return strtolower($this->attributes['language']) . '-' . strtoupper($this->attributes['localization']);
+    }
 }

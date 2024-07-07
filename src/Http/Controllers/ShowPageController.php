@@ -3,6 +3,7 @@
 namespace Mguinea\Pages\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Mguinea\Pages\Data\Page;
 use Mguinea\Pages\Models\RouteInterface;
 
 class ShowPageController implements ShowPageControllerInterface
@@ -14,12 +15,12 @@ class ShowPageController implements ShowPageControllerInterface
         $route = $routeModel::where('uri', $uri)
             ->where('verb', 'GET')
             ->firstOrFail();
-        $page= $route->page;
+        $page = $route->page;
 
-        app()->setLocale($page->lang);
+        app()->setLocale($page->locale->language);
 
         return view($page->view->name, [
-            'page' => $page
+            'page' => Page::fromModel($page)
         ]);
     }
 }
