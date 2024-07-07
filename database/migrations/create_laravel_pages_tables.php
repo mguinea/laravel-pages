@@ -37,8 +37,6 @@ return new class extends Migration
             $table->string('verb');
             $table->string('uri')->index('idx_uri');
             $table->string('action');
-
-            // TODO add page_id?
         });
 
         Schema::create($tableNames['pages'], function (Blueprint $table) use ($tableNames) {

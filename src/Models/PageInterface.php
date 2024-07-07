@@ -3,7 +3,6 @@
 namespace Mguinea\Pages\Models;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 interface PageInterface
 {
@@ -13,7 +12,7 @@ interface PageInterface
 
     public function view(): BelongsTo;
 
-    public function route(): HasOne;
+    public function route(): BelongsTo;
 
     public static function fromUrl(string $url): static|null;
 }
