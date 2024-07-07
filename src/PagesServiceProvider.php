@@ -50,7 +50,9 @@ class PagesServiceProvider extends ServiceProvider
         $this->app->bind(PageInterface::class, fn ($app) => $app->make($app->config['laravel-pages.models.page']));
         $this->app->bind(RouteInterface::class, fn ($app) => $app->make($app->config['laravel-pages.models.route']));
         $this->app->bind(ViewInterface::class, fn ($app) => $app->make($app->config['laravel-pages.models.view']));
-        $this->app->bind(RouteLoaderInterface::class, fn ($app) => $app->make($app->config['laravel-pages.route_loader']));
+        $this->app->bind(RouteLoaderInterface::class, function ($app) {
+            return new RouteLoader($app->make(RouteInterface::class));
+        });
 
         $this->mergeConfigFrom(
             __DIR__.'/../config/laravel-pages.php',
