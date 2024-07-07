@@ -38,11 +38,6 @@ class PagesServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'laravel-pages');
 
         $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
-
-        $this->app->bind(PageInterface::class, fn ($app) => $app->make($app->config['laravel-pages.models.page']));
-        $this->app->bind(RouteInterface::class, fn ($app) => $app->make($app->config['laravel-pages.models.route']));
-        $this->app->bind(ViewInterface::class, fn ($app) => $app->make($app->config['laravel-pages.models.view']));
-        $this->app->bind(RouteLoaderInterface::class, fn ($app) => $app->make($app->config['laravel-pages.route_loader']));
     }
 
     /**
@@ -52,6 +47,11 @@ class PagesServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->bind(PageInterface::class, fn ($app) => $app->make($app->config['laravel-pages.models.page']));
+        $this->app->bind(RouteInterface::class, fn ($app) => $app->make($app->config['laravel-pages.models.route']));
+        $this->app->bind(ViewInterface::class, fn ($app) => $app->make($app->config['laravel-pages.models.view']));
+        $this->app->bind(RouteLoaderInterface::class, fn ($app) => $app->make($app->config['laravel-pages.route_loader']));
+
         $this->mergeConfigFrom(
             __DIR__.'/../config/laravel-pages.php',
             'laravel-pages'
