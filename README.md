@@ -2,16 +2,16 @@
 
 ## Installing
 
-- Install package in your Laravel project
+-   Install package in your Laravel project
 
 ```bash
 composer require mguinea/laravel-pages
 ```
 
-- Publishing to project
+-   Publishing to project
 
 ```bash
-php artisan vendor:publish --provider="Mguinea\LaravelPages\PagesServiceProvider"
+php artisan vendor:publish --provider="Mguinea\Pages\PagesServiceProvider"
 ```
 
 ## Architecture
