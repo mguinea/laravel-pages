@@ -46,7 +46,7 @@ class Page
 
         $alternates = [];
         foreach($eloquentPage->entry->pages()->get() as $ePage) {
-            if ($ePage->locale->default === true) {
+            if ($ePage->locale->default === 1) {
                 $alternates[] = [
                     'href' => url($ePage->route->uri),
                     'hreflang' => 'x-default'
@@ -67,9 +67,9 @@ class Page
             $eloquentPage->locale->localization,
             $content,
             $eloquentPage->view->name,
-            $eloquentPage->robot_index,
-            $eloquentPage->robot_follow,
-            $eloquentPage->canonical,
+            $eloquentPage->robotIndex,
+            $eloquentPage->robotFollow,
+            url($eloquentPage->canonical),
             config('laravel-pages.base_url'),
             $alternates,
             (new DateTime())->setTimestamp($eloquentPage->published_at)
