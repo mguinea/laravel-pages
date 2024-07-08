@@ -18,6 +18,7 @@ if (config('laravel-pages.route_loader_enabled') === true) {
                 $route->action
             );
             $laravelRoute->name($route->name);
+            $laravelRoute->middleware(['web']); // TODO move to migration
         }
     }
 }
