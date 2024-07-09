@@ -28,7 +28,7 @@ class Route extends Model implements RouteInterface
 
     public function page(): HasOne
     {
-        return $this->hasOne(Page::class);
+        return $this->hasOne(config('laravel-pages.models.page'));
     }
 
     public function getName(): string|null

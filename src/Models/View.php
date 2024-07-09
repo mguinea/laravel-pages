@@ -25,6 +25,6 @@ class View extends Model implements ViewInterface
 
     public function pages(): HasMany
     {
-        return $this->hasMany(Page::class);
+        return $this->hasMany(config('laravel-pages.models.page'));
     }
 }

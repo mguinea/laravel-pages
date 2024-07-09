@@ -35,22 +35,22 @@ class Page extends Model implements PageInterface
 
     public function locale(): BelongsTo
     {
-        return $this->belongsTo(Locale::class);
+        return $this->belongsTo(config('laravel-pages.models.locale'));
     }
 
     public function entry(): BelongsTo
     {
-        return $this->belongsTo(Entry::class);
+        return $this->belongsTo(config('laravel-pages.models.entry'));
     }
 
     public function view(): BelongsTo
     {
-        return $this->belongsTo(View::class);
+        return $this->belongsTo(config('laravel-pages.models.view'));
     }
 
     public function route(): BelongsTo
     {
-        return $this->belongsTo(Route::class);
+        return $this->belongsTo(config('laravel-pages.models.route'));
     }
 
     public static function fromUrl(string $url): static|null
