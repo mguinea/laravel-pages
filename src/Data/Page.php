@@ -6,7 +6,7 @@ use DateTime;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;use League\CommonMark\Extension\FrontMatter\FrontMatterExtension;
 use League\CommonMark\MarkdownConverter;
-use Mguinea\Pages\Models\Page as EloquentPage;
+use Mguinea\Pages\Models\PageInterface;
 
 class Page
 {
@@ -27,7 +27,7 @@ class Page
     ) {
     }
 
-    public static function fromModel(EloquentPage $eloquentPage): self
+    public static function fromModel(PageInterface $eloquentPage): self
     {
         // Define your configuration, if needed
         $config = [];
