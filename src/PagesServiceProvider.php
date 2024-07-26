@@ -4,7 +4,6 @@ namespace Mguinea\Pages;
 
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
-use Mguinea\Pages\Models\LocaleInterface;
 use Mguinea\Pages\Models\PageInterface;
 use TranslationInterface;
 
@@ -40,8 +39,11 @@ class PagesServiceProvider extends ServiceProvider
         if (config('pages.route_loader_enabled') === true) {
             if (Schema::hasTable(config('pages.table_names.pages'))) {
                 $pageModel = config('pages.models.page');
+                $locales = config('pages.locales');
+
+
                 $routeCollection = new RouteCollection($pageModel::wherePublished()->get()->map(function($page) {
-                    return new Route($page->uri);
+                    return new Route($page->getTranslation('uri', $locale, false));
                 }));
 
                 (new RouteRegistrar(app()->get(\Illuminate\Routing\Router::class)))->registerRoutes($routeCollection);
@@ -56,7 +58,6 @@ class PagesServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(LocaleInterface::class, fn ($app) => $app->make($app->config['pages.models.locale']));
         $this->app->bind(PageInterface::class, fn ($app) => $app->make($app->config['pages.models.page']));
         $this->app->bind(TranslationInterface::class, fn ($app) => $app->make($app->config['pages.models.translation']));
 
