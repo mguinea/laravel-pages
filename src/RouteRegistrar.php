@@ -2,7 +2,9 @@
 
 namespace Mguinea\Pages;
 
+use Exception;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Routing\Router;
 
 class RouteRegistrar implements RouteRegistrarInterface
@@ -14,44 +16,23 @@ class RouteRegistrar implements RouteRegistrarInterface
     public function registerRoutes(Collection $pendingRoutes): void
     {
         $pendingRoutes->each(function (Route $pendingRoute) {
-            $pendingRoute->actions->each(function (PendingRouteAction $action) {
-                $route = $this->router->addRoute($action->methods, $action->uri, $action->action());
+            try {
+                $route = $this->router->addRoute($pendingRoute->methods(), $pendingRoute->uri(), $pendingRoute->action());
 
-                $route->middleware($action->middleware);
+                $route->middleware($pendingRoute->middlewares());
 
-                $route->name($action->name);
+                $route->name($pendingRoute->name());
 
-                if (count($action->wheres)) {
-                    $route->setWheres($action->wheres);
+                if (count($pendingRoute->wheres())) {
+                    $route->setWheres($pendingRoute->wheres());
                 }
 
-                if ($action->domain) {
-                    $route->domain($action->domain);
+                if ($pendingRoute->domain()) {
+                    $route->domain($pendingRoute->domain());
                 }
-            });
-        });
-    }
-
-    use Illuminate\Support\Facades\Schema;
-
-    if (config('pages.route_loader_enabled') === true) {
-        if (Schema::hasTable('lp_routes')) {
-            $routesLoader = app()->make(\Mguinea\Pages\RouteLoaderInterface::class);
-            $showPageController = app()->make(\Mguinea\Pages\Http\Controllers\ShowPageControllerInterface::class);
-            $router = app()->get(\Illuminate\Routing\Router::class);
-
-            $routes = $routesLoader->load();
-
-            /** @var \Mguinea\Pages\Models\RouteInterface $route */
-            foreach ($routes as $route) {
-                $laravelRoute = $router->addRoute(
-                    $route->verb,
-                    $route->uri,
-                    $route->action
-                );
-                $laravelRoute->name($route->name);
-                $laravelRoute->middleware(['web']); // TODO move to migration
+            } catch (Exception $e) {
+                Log::error('[RouteRegistrar] ' . $e->getMessage());
             }
-        }
+        });
     }
 }

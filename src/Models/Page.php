@@ -2,12 +2,13 @@
 
 namespace Mguinea\Pages\Models;
 
-use Attribute;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Mguinea\Pages\CommonMark\PageContentParser;
 use Mguinea\Pages\Traits\Attributable;
 
 class Page extends Model implements PageInterface
@@ -49,9 +50,14 @@ class Page extends Model implements PageInterface
     protected function content(): Attribute
     {
         return Attribute::make(
-            get: fn (string $value) => strtolower($value), // TODO, common mark parser
-            set: fn (string $value) => strtolower($value)
+            get: fn (string $value) => PageContentParser::content($value),
+            set: fn (string $value) => $value
         );
+    }
+
+    protected function alternates(): Attribute
+    {
+
     }
 
     public function locale(): BelongsTo
@@ -59,7 +65,7 @@ class Page extends Model implements PageInterface
         return $this->belongsTo(config('laravel-pages.models.locale'));
     }
 
-    public function scopePublished(Builder $query): void
+    public function scopeWherePublished(Builder $query): void
     {
         $query->where('published_at', '>=', Carbon::today())->where('draft', false);
     }

@@ -26,5 +26,5 @@ return [
 
     'backoffice_prefix' => 'backoffice',
 
-    'register_enabled' => true
+    'register_enabled' => false
 ];

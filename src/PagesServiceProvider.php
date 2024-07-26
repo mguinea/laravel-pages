@@ -2,14 +2,11 @@
 
 namespace Mguinea\Pages;
 
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
-use Mguinea\Pages\Http\Controllers\ShowPageControllerInterface;
-use Mguinea\Pages\Models\EntryInterface;
 use Mguinea\Pages\Models\LocaleInterface;
 use Mguinea\Pages\Models\PageInterface;
-use Mguinea\Pages\Models\RouteInterface;
-use Mguinea\Pages\Models\ViewInterface;
-use Mguinea\Pages\RouteLoaderInterface;
+use TranslationInterface;
 
 class PagesServiceProvider extends ServiceProvider
 {
@@ -29,13 +26,27 @@ class PagesServiceProvider extends ServiceProvider
     {
         $this->publishes([
             __DIR__.'/../config/pages.php' => config_path('pages.php'),
-        ], 'config');
+        ]);
 
         $this->publishesMigrations([
             __DIR__.'/../database/migrations' => database_path('migrations'),
         ]);
 
         $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
+
+        /**
+         * Load and register routes. TODO move to specific class for this
+         */
+        if (config('pages.route_loader_enabled') === true) {
+            if (Schema::hasTable(config('pages.table_names.pages'))) {
+                $pageModel = config('pages.models.page');
+                $routeCollection = new RouteCollection($pageModel::wherePublished()->get()->map(function($page) {
+                    return new Route($page->uri);
+                }));
+
+                (new RouteRegistrar(app()->get(\Illuminate\Routing\Router::class)))->registerRoutes($routeCollection);
+            }
+        }
     }
 
     /**
@@ -45,16 +56,13 @@ class PagesServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(LocaleInterface::class, fn ($app) => $app->make($app->config['laravel-pages.models.locale']));
-        $this->app->bind(PageInterface::class, fn ($app) => $app->make($app->config['laravel-pages.models.page']));
-        $this->app->bind(RouteLoaderInterface::class, function ($app) {
-            return new RouteLoader($app->make(RouteInterface::class));
-        });
-        $this->app->bind(ShowPageControllerInterface::class, fn ($app) => $app->make($app->config['laravel-pages.controllers.show_page']));
+        $this->app->bind(LocaleInterface::class, fn ($app) => $app->make($app->config['pages.models.locale']));
+        $this->app->bind(PageInterface::class, fn ($app) => $app->make($app->config['pages.models.page']));
+        $this->app->bind(TranslationInterface::class, fn ($app) => $app->make($app->config['pages.models.translation']));
 
         $this->mergeConfigFrom(
-            __DIR__.'/../config/laravel-pages.php',
-            'laravel-pages'
+            __DIR__.'/../config/pages.php',
+            'pages'
         );
     }
 }

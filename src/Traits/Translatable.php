@@ -5,6 +5,7 @@ namespace Mguinea\Pages\Traits;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Config;
+use Mguinea\Pages\Exceptions\AttributeIsNotTranslatable;
 
 trait Translatable
 {
@@ -120,10 +121,10 @@ trait Translatable
     public function translations(): MorphToMany
     {
         return $this->morphToMany(
-            config('latevaweb-translatable.models.translation'),
+            config('pages.models.translation'),
             'translatable',
-            config('latevaweb-translatable.table_names.translatables'),
-            config('latevaweb-translatable.column_names.model_morph_key'),
+            config('pages.table_names.translatables'),
+            config('pages.column_names.model_morph_key'),
             'translation_id');
     }
 

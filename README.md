@@ -26,16 +26,27 @@ erDiagram
     }
 ```
 
+## Helpers
+
+### globals
+
+## Traits
+
+### Attributable
+
+### Translatable
+
 ## TODO
-- [ ] Load routes
-- [ ] Backoffice based on breeze (cruds: pages, globals, taxonomies, menus (group taxonimized), robots)
-- [ ] Translations (json attributes + db), helpers
-- [ ] Taxonomizable
-- [ ] Grouppable
-- [ ] Spatie media + media not linked to a model (?)
-- [ ] Backup from backoffice
-- [ ] Generate sitemap, dynamic? -> route sitemap.xml, that generates automatically. Using cache
-- [ ] WIP Commonmark with blade placeholder (Extension) todo: register in renderer
-- [ ] Contact form endpoint post + mailable
-- [ ] Tests
-- [ ] Basic views + tailwind setup (publish config.js and package.json)
+
+-   [x] Load routes
+-   [ ] Backoffice based on breeze (cruds: pages, globals, taxonomies, menus (group taxonimized), robots)
+-   [x] Translations (json attributes + db), helpers
+-   [ ] Taxonomizable
+-   [ ] Grouppable
+-   [ ] Spatie media + media not linked to a model (?)
+-   [ ] Backup from backoffice
+-   [ ] Generate sitemap, dynamic? -> route sitemap.xml, that generates automatically. Using cache
+-   [ ] WIP Commonmark with blade placeholder (Extension) todo: register in renderer
+-   [ ] Contact form endpoint post + mailable
+-   [ ] Tests
+-   [ ] Basic views + tailwind setup (publish config.js and package.json)
