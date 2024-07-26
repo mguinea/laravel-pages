@@ -32,27 +32,12 @@ class Page extends Model implements PageInterface
     {
         parent::__construct($attributes);
 
-        $this->table = config('laravel-pages.table_names.pages') ?: parent::getTable();
+        $this->table = config('pages.table_names.pages') ?: parent::getTable();
     }
 
     public function locale(): BelongsTo
     {
         return $this->belongsTo(config('laravel-pages.models.locale'));
-    }
-
-    public function entry(): BelongsTo
-    {
-        return $this->belongsTo(config('laravel-pages.models.entry'));
-    }
-
-    public function view(): BelongsTo
-    {
-        return $this->belongsTo(config('laravel-pages.models.view'));
-    }
-
-    public function route(): BelongsTo
-    {
-        return $this->belongsTo(config('laravel-pages.models.route'));
     }
 
     public static function fromUrl(string $url): static|null

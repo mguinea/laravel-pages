@@ -45,11 +45,8 @@ class PagesServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(EntryInterface::class, fn ($app) => $app->make($app->config['laravel-pages.models.entry']));
         $this->app->bind(LocaleInterface::class, fn ($app) => $app->make($app->config['laravel-pages.models.locale']));
         $this->app->bind(PageInterface::class, fn ($app) => $app->make($app->config['laravel-pages.models.page']));
-        $this->app->bind(RouteInterface::class, fn ($app) => $app->make($app->config['laravel-pages.models.route']));
-        $this->app->bind(ViewInterface::class, fn ($app) => $app->make($app->config['laravel-pages.models.view']));
         $this->app->bind(RouteLoaderInterface::class, function ($app) {
             return new RouteLoader($app->make(RouteInterface::class));
         });
