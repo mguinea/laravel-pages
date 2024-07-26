@@ -12,9 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         $tableNames = config('pages.table_names');
-
-        $tableNames = config('latevaweb-translatable.table_names');
-        $columnNames = config('latevaweb-translatable.column_names');
+        $columnNames = config('pages.column_names');
 
         if (!Schema::hasTable($tableNames['translations'])) {
             Schema::create($tableNames['translations'], function (Blueprint $table) {

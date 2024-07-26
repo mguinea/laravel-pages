@@ -35,6 +35,6 @@ erDiagram
 - [ ] Spatie media + media not linked to a model (?)
 - [ ] Backup from backoffice
 - [ ] Generate sitemap, dynamic? -> route sitemap.xml, that generates automatically. Using cache
-- [ ] Commonmark with blade placeholder (Extension)
+- [ ] WIP Commonmark with blade placeholder (Extension) todo: register in renderer
 - [ ] Contact form endpoint post + mailable
 - [ ] Tests
