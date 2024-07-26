@@ -90,10 +90,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        $tableNames = config('latevaweb-translatable.table_names');
-
-        Schema::dropIfExists($tableNames['translatables']);
-        Schema::dropIfExists($tableNames['translations']);
         $tableNames = config('pages.table_names');
 
         Schema::dropIfExists($tableNames['locales']);
@@ -101,5 +97,7 @@ return new class extends Migration
         Schema::dropIfExists($tableNames['views']);
         Schema::dropIfExists($tableNames['routes']);
         Schema::dropIfExists($tableNames['pages']);
+        Schema::dropIfExists($tableNames['translatables']);
+        Schema::dropIfExists($tableNames['translations']);
     }
 };

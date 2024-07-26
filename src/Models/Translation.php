@@ -20,6 +20,7 @@ class Translation extends Model
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-        $this->setTable(config('pages.table_names.translations'));
+
+        $this->table = config('pages.table_names.translations') ?: parent::getTable();
     }
 }

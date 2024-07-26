@@ -28,7 +28,7 @@ erDiagram
 
 ## TODO
 - [ ] Load routes
-- [ ] Backoffice based on breeze (cruds: pages, globals, taxonomies, menus (group taxonimized))
+- [ ] Backoffice based on breeze (cruds: pages, globals, taxonomies, menus (group taxonimized), robots)
 - [ ] Translations (json attributes + db), helpers
 - [ ] Taxonomizable
 - [ ] Grouppable
@@ -38,3 +38,4 @@ erDiagram
 - [ ] WIP Commonmark with blade placeholder (Extension) todo: register in renderer
 - [ ] Contact form endpoint post + mailable
 - [ ] Tests
+- [ ] Basic views + tailwind setup (publish config.js and package.json)
