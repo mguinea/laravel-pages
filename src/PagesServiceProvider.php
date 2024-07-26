@@ -28,7 +28,7 @@ class PagesServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__.'/../config/laravel-pages.php' => config_path('laravel-pages.php'),
+            __DIR__.'/../config/pages.php' => config_path('pages.php'),
         ], 'config');
 
         $this->publishesMigrations([

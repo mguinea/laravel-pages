@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        $tableNames = config('laravel-pages.table_names');
+        $tableNames = config('pages.table_names');
 
         Schema::create($tableNames['locales'], function (Blueprint $table) {
             $table->id();
@@ -72,7 +72,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        $tableNames = config('laravel-pages.table_names');
+        $tableNames = config('pages.table_names');
 
         Schema::dropIfExists($tableNames['locales']);
         Schema::dropIfExists($tableNames['entries']);
