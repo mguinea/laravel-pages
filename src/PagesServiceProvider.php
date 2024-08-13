@@ -2,10 +2,7 @@
 
 namespace Mguinea\Pages;
 
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
-use Mguinea\Pages\Models\PageInterface;
-use TranslationInterface;
 
 class PagesServiceProvider extends ServiceProvider
 {
@@ -29,26 +26,21 @@ class PagesServiceProvider extends ServiceProvider
 
         $this->publishesMigrations([
             __DIR__.'/../database/migrations' => database_path('migrations'),
-        ]);
-
-        $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
+        ], 'pages-migrations');
 
         /**
-         * Load and register routes. TODO move to specific class for this
+         * Override configurations from Route Loader package
          */
-        if (config('pages.route_loader_enabled') === true) {
-            if (Schema::hasTable(config('pages.table_names.pages'))) {
-                $pageModel = config('pages.models.page');
-                $locales = config('pages.locales');
+        config([
+            'route-loader' => config('pages.route_loader'),
+        ]);
 
-
-                $routeCollection = new RouteCollection($pageModel::wherePublished()->get()->map(function($page) {
-                    return new Route($page->getTranslation('uri', $locale, false));
-                }));
-
-                (new RouteRegistrar(app()->get(\Illuminate\Routing\Router::class)))->registerRoutes($routeCollection);
-            }
-        }
+        /**
+         * Override configurations from Tanslatable package
+         */
+        config([
+            'translatable' => config('pages.translatable'),
+        ]);
     }
 
     /**
@@ -58,8 +50,7 @@ class PagesServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(PageInterface::class, fn ($app) => $app->make($app->config['pages.models.page']));
-        $this->app->bind(TranslationInterface::class, fn ($app) => $app->make($app->config['pages.models.translation']));
+        // $this->app->bind(PageInterface::class, fn ($app) => $app->make($app->config['pages.models.page']));
 
         $this->mergeConfigFrom(
             __DIR__.'/../config/pages.php',

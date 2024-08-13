@@ -1,15 +1,11 @@
 <?php
 
-if (! function_exists('globals')) {
+if (! function_exists('page')) {
     /**
      * @return string
      */
-    function globals(string $key = "", ?string $lang = null)
+    function page(string $key = "", ?string $lang = null)
     {
-        if (is_null($lang)) {
-            $lang = app()->getLocale();
-        }
 
-        return __('globals' . '.' . $key, [], $lang);
     }
 }

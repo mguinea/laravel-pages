@@ -2,32 +2,42 @@
 
 return [
     'models' => [
-        'page' => \Mguinea\Pages\Models\Page::class,
-        'translation' => \Mguinea\Pages\Models\Translation::class,
-        'user' => \Mguinea\Pages\Models\User::class,
+        'page' => \Mguinea\Pages\Models\Page::class
     ],
-
-    'route' => \Mguinea\Pages\Route::class,
 
     'table_names' => [
-        'pages' => 'lps_pages',
-        'translatables' => 'lps_translatables',
-        'translations' => 'lps_translations',
-        'users' => 'lps_users',
+        'pages' => 'lp_pages',
     ],
 
-    'column_names' => [
-        'model_morph_key' => 'model_id',
+    /**
+     * Route loader package configuration overrides
+     */
+    'route_loader' => [
+        'enabled' => env('ROUTE_LOADER_ENABLED', true),
+
+        'loader' => \Mguinea\Pages\EloquentRouteLoader::class,
     ],
 
-    'route_loader_enabled' => true,
+    /**
+     * Translatable package configuration overrides
+     */
+    'translatable' => [
+        'models' => [
+            'translation' => Mguinea\Translatable\Models\Translation::class,
+        ],
 
-    'backoffice_prefix' => 'backoffice',
+        'table_names' => [
+            'translatables' => 'translatables',
+            'translations' => 'translations',
+        ],
 
-    'register_enabled' => false,
+        'column_names' => [
+            'model_morph_key' => 'model_id',
+        ],
 
-    'locales' => [
-        'es',
-        'ca'
+        'locales' => [
+            'en',
+            'es'
+        ]
     ]
 ];

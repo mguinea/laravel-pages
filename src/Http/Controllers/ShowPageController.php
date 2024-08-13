@@ -2,25 +2,33 @@
 
 namespace Mguinea\Pages\Http\Controllers;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
-use Mguinea\Pages\Data\Page;
-use Mguinea\Pages\Models\RouteInterface;
+use Mguinea\Pages\Models\Page;
+use Mguinea\Translatable\Models\Translation;
 
-class ShowPageController implements ShowPageControllerInterface
+class ShowPageController
 {
     public function __invoke(Request $request)
     {
         $uri = $request->path();
-        $routeModel = app()->make(RouteInterface::class);
-        $route = $routeModel::where('uri', $uri)
-            ->where('verb', 'GET')
+
+        $translation = Translation::where('field', 'uri')
+            ->where('content', $uri)
+            ->select('locale')
             ->firstOrFail();
-        $page = $route->page;
 
-        app()->setLocale($page->locale->language);
+        $locale = $translation->locale;
 
-        return view($page->view->name, [
-            'page' => Page::fromModel($page)
+        $page = Page::whereHas('translations', function(Builder $query) use ($uri) {
+            $query->where('field', 'uri')->where('content', $uri);
+        })->firstOrFail(); // TODO move to model
+
+        app()->setLocale($locale);
+
+        return view($page->getTranslation('template', $locale), [
+            'locale' => $locale,
+            'page' => $page
         ]);
     }
 }
